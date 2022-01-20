@@ -10,6 +10,19 @@ export const Wrapper = styled.div`
   justify-content: space-between;
   .login-status {
     display: flex;
+    align-items: center;
     gap: 1rem;
+    .profile-img {
+      width: 4rem;
+      height: 4rem;
+      background-color: #2F83ED;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 1.4rem;
+      font-weight: bold;
+      color: white;
+    }
   }
 `;
