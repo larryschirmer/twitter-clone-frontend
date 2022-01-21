@@ -25,6 +25,7 @@ export const Wrapper = styled.div`
   .error {
     position: absolute;
     bottom: -3rem;
+    font-size: 1.6rem;
     color: ${colors.grey8};
   }
 `;

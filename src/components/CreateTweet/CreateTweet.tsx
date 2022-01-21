@@ -15,7 +15,7 @@ const CreateTweet = () => {
 
   const initialValues = { tweet: '' };
   const validationSchema = Yup.object({
-    tweet: Yup.string().required('Username is required'),
+    tweet: Yup.string().required('Nothing on your mind?'),
   });
 
   const loading = false;
@@ -44,11 +44,13 @@ const CreateTweet = () => {
             placeholder="What's on your mind?"
             error={touched.tweet ? errors.tweet : ''}
             onChange={handleChange}
-            onBlur={() => setFieldTouched('name', true)}
+            onBlur={() => setFieldTouched('tweet', true)}
           />
         </div>
         <div className="form-row grid-cta">
-          <Button disabled={!isValid || loading}>Tweet</Button>
+          <Button type="submit" disabled={!isValid || loading}>
+            Tweet
+          </Button>
         </div>
       </form>
     </styles.Wrapper>
