@@ -1,7 +1,6 @@
 import Header from 'components/Header';
 import CenterColumn from 'components/CenterColumn';
-import Auth from 'components/Auth';
-import CreateTweet from 'components/CreateTweet';
+import UserInteract from 'components/UserInteract';
 import Tweet from 'components/Tweet';
 
 import { Provider, appState } from 'utils/AppState';
@@ -14,8 +13,7 @@ const Home = () => {
       <styles.Wrapper>
         <Header />
         <CenterColumn>
-          <Auth />
-          <CreateTweet />
+          <UserInteract />
           <Tweet />
         </CenterColumn>
       </styles.Wrapper>
