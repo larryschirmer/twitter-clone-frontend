@@ -1,11 +1,13 @@
 import * as styles from './Header.styles';
 
+import ProfileImage from 'components/ProfileImage';
+
 const Header = () => {
   return (
     <styles.Wrapper>
       <h1>Twitter Clone</h1>
       <div className="login-status">
-        <div className="profile-img">UN</div>
+        <ProfileImage initials='UN' />
         <div className="profile-name">User Name</div>
       </div>
     </styles.Wrapper>
