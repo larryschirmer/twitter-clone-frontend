@@ -1,5 +1,7 @@
 import { formatDistanceToNow } from 'date-fns';
+
 import ProfileImage from 'components/ProfileImage';
+import CommentForm from './CommentForm';
 
 import * as styles from './Tweet.styles';
 
@@ -93,23 +95,30 @@ const Tweet = () => {
   return (
     <styles.Wrapper>
       <Header name={tweet.user.name} date={tweet.date} />
-      {tweet.message && <div className="message">{tweet.message}</div>}
-      {tweet.retweet && (
-        <div className="retweet">
-          <Header name={tweet.retweet.user.name} date={tweet.retweet.date} />
-          <div className="message">{tweet.retweet.message}</div>
-        </div>
-      )}
-      {tweet.comments.length && (
-        <div className="comments">
-          {tweet.comments.map((comment) => (
-            <div className="comment">
-              <Header name={comment.user.name} date={comment.date} />
-              <div className="message">{comment.message}</div>
+      <div className="body">
+        {tweet.message && <div className="message">{tweet.message}</div>}
+        {tweet.retweet && (
+          <div className="retweet">
+            <Header name={tweet.retweet.user.name} date={tweet.retweet.date} />
+            <div className="body">
+              <div className="message">{tweet.retweet.message}</div>
             </div>
-          ))}
-        </div>
-      )}
+          </div>
+        )}
+        <CommentForm />
+        {tweet.comments.length && (
+          <div className="comments">
+            {tweet.comments.map((comment) => (
+              <div key={comment._id} className="comment">
+                <Header name={comment.user.name} date={comment.date} />
+                <div className="body">
+                  <div className="message">{comment.message}</div>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
     </styles.Wrapper>
   );
 };
