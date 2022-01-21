@@ -6,24 +6,23 @@ import Input from 'components/Input';
 
 import * as styles from './AuthForm.styles';
 
-type Inputs = {
+export type Inputs = {
   name: string;
   password: string;
 };
 
 type Props = {
   submitCopy: string;
+  loading?: boolean;
   handleSubmit: (values: Inputs) => void;
 };
 
-const AuthForm = ({ submitCopy = 'Submit', handleSubmit }: Props) => {
+const AuthForm = ({ submitCopy = 'Submit', loading = false, handleSubmit }: Props) => {
   const initialValues = { name: '', password: '' };
   const validationSchema = Yup.object({
     name: Yup.string().required('Username is required'),
     password: Yup.string().required('Password is required'),
   });
-
-  const loading = false;
 
   const { handleChange, values, submitForm, errors, touched, setFieldTouched, isValid } =
     useFormik<Inputs>({
