@@ -42,7 +42,9 @@ html {
   // setup fonts and sizes
   p,
   a,
-  button {
+  button,
+  input,
+  textarea {
     font-family: 'Source Sans Pro', sans-serif;
   }
   h1,
@@ -79,7 +81,8 @@ html {
     font-size: 100%;
   }
   label,
-  input {
+  input,
+  textarea {
     font-size: 87.5%;
   }
   // reset list and link styles

@@ -1,13 +1,13 @@
 import { InputHTMLAttributes } from 'react';
 
-import * as styles from './Input.styles';
+import * as styles from './TextArea.styles';
 
-export type Props = InputHTMLAttributes<HTMLInputElement> & {
-  label: string;
+export type Props = InputHTMLAttributes<HTMLTextAreaElement> & {
+  label?: string;
   error?: string;
 };
 
-const Input = ({
+const TextArea = ({
   id,
   label,
   type = 'text',
@@ -22,10 +22,10 @@ const Input = ({
   return (
     <styles.Wrapper>
       <label htmlFor={id}>{label}</label>
-      <input {...{ id, type, name, value, placeholder, onChange, onBlur, onFocus }} size={1} />
+      <textarea {...{ id, type, name, value, placeholder, onChange, onBlur, onFocus }} />
       <div className="error">{error && <p role="alert">{error}</p>}</div>
     </styles.Wrapper>
   );
 };
 
-export default Input;
+export default TextArea;

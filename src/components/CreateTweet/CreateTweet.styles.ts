@@ -9,8 +9,7 @@ export const Wrapper = styled.div`
     column-gap: 2rem;
     row-gap: 1rem;
     grid-template-areas:
-      'name'
-      'password'
+      'tweet'
       'cta';
     .form-row {
       margin-bottom: 2rem;
@@ -21,11 +20,8 @@ export const Wrapper = styled.div`
         margin-bottom: 1rem;
       }
     }
-    .grid-name {
-      grid-area: name;
-    }
-    .grid-password {
-      grid-area: password;
+    .grid-tweet {
+      grid-area: tweet;
     }
     .grid-cta {
       grid-area: cta;

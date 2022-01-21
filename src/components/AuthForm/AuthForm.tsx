@@ -6,7 +6,7 @@ import Input from 'components/Input';
 
 import * as styles from './AuthForm.styles';
 
-export type Inputs = {
+type Inputs = {
   name: string;
   password: string;
 };
@@ -66,12 +66,10 @@ const AuthForm = ({ submitCopy = 'Submit', handleSubmit }: Props) => {
             onBlur={() => setFieldTouched('password', true)}
           />
         </div>
-        <div className="form-row grid-ctas">
-          <div className="ctas">
-            <Button disabled={!isValid || loading} type="submit" aria-label="sending request">
-              {submitCopy}
-            </Button>
-          </div>
+        <div className="form-row grid-cta">
+          <Button disabled={!isValid || loading} type="submit" aria-label="sending request">
+            {submitCopy}
+          </Button>
         </div>
       </form>
     </styles.Wrapper>

@@ -11,7 +11,9 @@ export const Wrapper = styled.div`
     margin-bottom: 1rem;
     color: ${colors.grey9};
   }
-  input {
+  textarea {
+    resize: vertical;
+    min-height: 16rem;
     border: 0.1rem solid ${colors.grey5};
     border-radius: 0.4rem;
     padding: 0.6rem 1.2rem;
