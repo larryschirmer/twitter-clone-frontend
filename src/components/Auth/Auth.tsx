@@ -8,6 +8,8 @@ import * as styles from './Auth.styles';
 import Button from 'components/Button';
 import AuthForm, { Inputs } from 'components/AuthForm';
 
+import useAppState from 'utils/AppState';
+
 type DataSignUp = {
   signUp: {
     user: {
@@ -64,6 +66,7 @@ const copy = {
 
 const Auth = () => {
   const [isNewUser, setIsNewUser] = useState(true);
+  const { setIsLoggedIn } = useAppState();
   const [signup, { loading: loadingUp, data: dataUp, error: errorUp }] = useMutation<
     DataSignUp,
     Vars
@@ -85,8 +88,9 @@ const Auth = () => {
     if ((dataUp && !errorUp) || (dataIn && !errorIn)) {
       const token = dataUp?.signUp?.jwt ?? dataIn?.signIn?.jwt ?? '';
       document.cookie = newToken(token);
+      setIsLoggedIn(true);
     }
-  }, [dataIn, dataUp, errorIn, errorUp]);
+  }, [dataIn, dataUp, errorIn, errorUp, setIsLoggedIn]);
 
   return (
     <styles.Wrapper>

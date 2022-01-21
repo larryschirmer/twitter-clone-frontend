@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import { gql, useLazyQuery } from '@apollo/client';
 
 import * as styles from './Header.styles';
@@ -7,6 +7,7 @@ import ProfileImage from 'components/ProfileImage';
 
 import getCookie from 'utils/getCookie';
 import deleteCookie from 'utils/deleteCookie';
+import useAppState from 'utils/AppState';
 
 const GETUSER = gql`
   query Query {
@@ -31,7 +32,7 @@ type Data = {
 };
 
 const Header = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const { isLoggedIn, setIsLoggedIn } = useAppState();
   const [getUser, { data, error }] = useLazyQuery<Data>(GETUSER);
 
   // if user has cookie, fetch user data
@@ -40,10 +41,20 @@ const Header = () => {
     if (token) getUser();
   }, [getUser]);
 
-  // once user data is loaded, render profile
+  // is user is logged in but user data is not available
   useEffect(() => {
-    if (data) setIsLoggedIn(true);
-  }, [data]);
+    if (isLoggedIn && !data) {
+      const token = getCookie(document.cookie, 'token');
+      if (token) getUser();
+    }
+  }, [data, getUser, isLoggedIn]);
+
+  // once user data is loaded, notify app user is logged in
+  useEffect(() => {
+    if (data) {
+      setIsLoggedIn(true);
+    }
+  }, [data, setIsLoggedIn]);
 
   // if the cookie is expired, clear cookie
   useEffect(() => {
@@ -54,7 +65,7 @@ const Header = () => {
     <styles.Wrapper>
       <h1>Twitter Clone</h1>
       <div className="login-status">
-        {isLoggedIn && (
+        {data && (
           <>
             <ProfileImage initials={data?.user.user.name[0] || ''} />
             <div className="profile-name">{data?.user.user.name}</div>
