@@ -30,4 +30,10 @@ export const Wrapper = styled.div`
     flex-direction: column;
     gap: 1rem;
   }
+  .comments {
+    margin-left: 5rem;
+    .comment {
+      padding: 1rem 0;
+    }
+  }
 `;
