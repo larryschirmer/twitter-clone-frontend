@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
 import { gql, useMutation } from '@apollo/client';
 
+import newToken from 'utils/newToken';
+
 import * as styles from './Auth.styles';
 
 import Button from 'components/Button';
@@ -54,10 +56,6 @@ const SIGNIN = gql`
     }
   }
 `;
-
-const dayInMilliseconds = 1000 * 60 * 60 * 24;
-const newToken = (token: string) =>
-  `token=${token}; expires=${new Date(Date.now() + dayInMilliseconds)}; path=/`;
 
 const copy = {
   newUser: ' New here? Sign up',
