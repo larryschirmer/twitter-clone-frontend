@@ -83,7 +83,7 @@ const Tweets = () => {
 
   return (
     <styles.Wrapper>
-      {data?.tweets && data?.tweets.map((tweet) => <Tweet {...{ tweet }} />)}
+      {data?.tweets && data?.tweets.map((tweet) => <Tweet key={tweet._id} {...{ tweet }} />)}
     </styles.Wrapper>
   );
 };
