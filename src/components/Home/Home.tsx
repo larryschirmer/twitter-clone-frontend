@@ -3,13 +3,13 @@ import CenterColumn from 'components/CenterColumn';
 import UserInteract from 'components/UserInteract';
 import Tweet from 'components/Tweet';
 
-import { Provider, appState } from 'utils/AppState';
+import { AppStateProvider } from 'utils/AppState';
 
 import * as styles from './Home.styles';
 
 const Home = () => {
   return (
-    <Provider value={appState}>
+    <AppStateProvider>
       <styles.Wrapper>
         <Header />
         <CenterColumn>
@@ -17,7 +17,7 @@ const Home = () => {
           <Tweet />
         </CenterColumn>
       </styles.Wrapper>
-    </Provider>
+    </AppStateProvider>
   );
 };
 
