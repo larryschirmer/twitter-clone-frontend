@@ -79,7 +79,7 @@ type Props = {
 
 const Tweet = ({ tweet }: Props) => {
   const [reTweet, { loading, data, error, reset }] = useMutation<Data, Vars>(RETWEET);
-  const { setReloadTweets } = useAppState();
+  const { isLoggedIn, setReloadTweets } = useAppState();
 
   const handleReTweet = () => {
     reTweet({ variables: { tweetId: tweet._id } });
@@ -104,9 +104,11 @@ const Tweet = ({ tweet }: Props) => {
     <styles.Wrapper>
       <div className="header-with-cta">
         <Header name={tweet.user.name} date={tweet.date} />
-        <Button disabled={loading} onClick={handleReTweet}>
-          Retweet
-        </Button>
+        {isLoggedIn && !tweet.retweet && (
+          <Button disabled={loading} onClick={handleReTweet}>
+            Retweet
+          </Button>
+        )}
       </div>
       <div className="body">
         {tweet.message && <div className="message">{tweet.message}</div>}
@@ -118,7 +120,7 @@ const Tweet = ({ tweet }: Props) => {
             </div>
           </div>
         )}
-        <CommentForm tweetId={tweet._id} />
+        {isLoggedIn && <CommentForm tweetId={tweet._id} />}
         {!!tweet.comments.length && (
           <div className="comments">
             {tweet.comments.map((comment) => (
