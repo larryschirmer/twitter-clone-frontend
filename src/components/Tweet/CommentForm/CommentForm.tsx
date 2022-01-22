@@ -82,7 +82,7 @@ const CommentForm = ({ tweetId }: Props) => {
       >
         <div className="form-row grid-comment">
           <Input
-            id="message"
+            id={`comment-${tweetId}`}
             name="message"
             value={values.message}
             placeholder="Comment"
