@@ -70,7 +70,7 @@ const Tweet = ({ tweet }: Props) => {
             </div>
           </div>
         )}
-        <CommentForm />
+        <CommentForm tweetId={tweet._id} />
         {!!tweet.comments.length && (
           <div className="comments">
             {tweet.comments.map((comment) => (

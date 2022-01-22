@@ -1,3 +1,5 @@
+import { useEffect } from 'react';
+import { gql, useMutation } from '@apollo/client';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 
@@ -6,27 +8,69 @@ import Input from 'components/Input';
 
 import * as styles from './CommentForm.styles';
 
-type Inputs = {
-  comment: string;
+import useAppState from 'utils/AppState';
+
+const COMMENTTWEET = gql`
+  mutation CommentTweet($tweetId: String, $message: String) {
+    commentTweet(tweetId: $tweetId, message: $message) {
+      _id
+    }
+  }
+`;
+
+type Vars = {
+  tweetId: string;
+  message: string;
 };
 
-const CommentForm = () => {
-  const handleSubmit = (values: Inputs) => {};
+type Data = {
+  _id: string;
+};
 
-  const initialValues = { comment: '' };
+type Inputs = {
+  message: string;
+};
+
+type Props = {
+  tweetId: string;
+};
+
+const CommentForm = ({ tweetId }: Props) => {
+  const [composeTweet, { loading, data, error, reset }] = useMutation<Data, Vars>(COMMENTTWEET);
+  const { setReloadTweets } = useAppState();
+
+  const handleSubmit = (values: Inputs) => {
+    composeTweet({ variables: { tweetId, ...values } });
+  };
+
+  const initialValues = { message: '' };
   const validationSchema = Yup.object({
-    comment: Yup.string().required('Nothing on your mind?'),
+    message: Yup.string().required('Nothing on your mind?'),
   });
 
-  const loading = false;
-
-  const { handleChange, values, submitForm, errors, touched, setFieldTouched, isValid } =
+  const { handleChange, values, submitForm, errors, touched, setFieldTouched, isValid, resetForm } =
     useFormik<Inputs>({
       initialValues,
       validationSchema,
       onSubmit: (values: Inputs) => handleSubmit(values),
       validateOnMount: true,
     });
+
+  // handle Errors
+  useEffect(() => {
+    if (error) {
+      // handle error
+    }
+  }, [error]);
+
+  // on success notify app to reload tweets
+  useEffect(() => {
+    if (data) {
+      setReloadTweets(true);
+      reset();
+      resetForm();
+    }
+  }, [data, reset, resetForm, setReloadTweets]);
 
   return (
     <styles.Wrapper>
@@ -38,13 +82,13 @@ const CommentForm = () => {
       >
         <div className="form-row grid-comment">
           <Input
-            id="comment"
-            name="comment"
-            value={values.comment}
+            id="message"
+            name="message"
+            value={values.message}
             placeholder="Comment"
-            error={touched.comment ? errors.comment : ''}
+            error={touched.message ? errors.message : ''}
             onChange={handleChange}
-            onBlur={() => setFieldTouched('comment', true)}
+            onBlur={() => setFieldTouched('message', true)}
           />
         </div>
         <div className="form-row grid-cta">
