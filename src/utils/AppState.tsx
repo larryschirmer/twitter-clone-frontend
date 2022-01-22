@@ -2,9 +2,9 @@ import { createContext, useContext, ReactNode, useState } from 'react';
 
 export const appState = {
   isLoggedIn: false,
-  setIsLoggedIn: function (value: boolean) {
-    this.isLoggedIn = value;
-  },
+  reloadTweets: false,
+  setIsLoggedIn: (value: boolean) => {},
+  setReloadTweets: (value: boolean) => {},
 };
 
 export const StateContext = createContext(appState);
@@ -25,10 +25,13 @@ type Props = {
 
 export const AppStateProvider = ({ children }: Props) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [reloadTweets, setReloadTweets] = useState(false);
 
   const value: typeof appState = {
     isLoggedIn,
+    reloadTweets,
     setIsLoggedIn: (value: boolean) => setIsLoggedIn(value),
+    setReloadTweets: (value: boolean) => setReloadTweets(value),
   };
   return <Provider {...{ value }}>{children}</Provider>;
 };
