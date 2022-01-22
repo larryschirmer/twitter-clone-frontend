@@ -1,9 +1,14 @@
+import { useEffect } from 'react';
+import { gql, useMutation } from '@apollo/client';
 import { formatDistanceToNow } from 'date-fns';
 
 import ProfileImage from 'components/ProfileImage';
+import Button from 'components/Button';
 import CommentForm from './CommentForm';
 
 import * as styles from './Tweet.styles';
+
+import useAppState from 'utils/AppState';
 
 type User = {
   _id: string;
@@ -52,14 +57,57 @@ const Header = ({ name, date }: HeaderProps) => {
   );
 };
 
+const RETWEET = gql`
+  mutation ReTweet($tweetId: String) {
+    reTweet(tweetId: $tweetId) {
+      _id
+    }
+  }
+`;
+
+type Vars = {
+  tweetId: string;
+};
+
+type Data = {
+  _id: string;
+};
+
 type Props = {
   tweet: TweetT;
 };
 
 const Tweet = ({ tweet }: Props) => {
+  const [reTweet, { loading, data, error, reset }] = useMutation<Data, Vars>(RETWEET);
+  const { setReloadTweets } = useAppState();
+
+  const handleReTweet = () => {
+    reTweet({ variables: { tweetId: tweet._id } });
+  };
+
+  // handle Errors
+  useEffect(() => {
+    if (error) {
+      // handle error
+    }
+  }, [error]);
+
+  // on success notify app to reload tweets
+  useEffect(() => {
+    if (data) {
+      setReloadTweets(true);
+      reset();
+    }
+  }, [data, reset, setReloadTweets]);
+
   return (
     <styles.Wrapper>
-      <Header name={tweet.user.name} date={tweet.date} />
+      <div className="header-with-cta">
+        <Header name={tweet.user.name} date={tweet.date} />
+        <Button disabled={loading} onClick={handleReTweet}>
+          Retweet
+        </Button>
+      </div>
       <div className="body">
         {tweet.message && <div className="message">{tweet.message}</div>}
         {tweet.retweet && (

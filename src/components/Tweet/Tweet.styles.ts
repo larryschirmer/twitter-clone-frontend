@@ -17,6 +17,10 @@ export const Wrapper = styled.div`
       align-items: center;
       gap: 1rem;
     }
+    &-with-cta {
+      display: flex;
+      justify-content: space-between;
+    }
   }
   .body {
     display: flex;
