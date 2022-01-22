@@ -15,7 +15,7 @@ import getCookie from 'utils/getCookie';
 
 import 'styles/global.scss';
 
-const httpLink = new HttpLink({ uri: process.env.BACKEND || 'http://localhost:4000' });
+const httpLink = new HttpLink({ uri: process.env.REACT_APP_BACKEND || 'http://localhost:4000' });
 
 const authMiddleware = new ApolloLink((operation, forward) => {
   // get token from cookies
